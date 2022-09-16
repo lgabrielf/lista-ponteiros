@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+float elip (int& i, j, k, z, x, y){
+    float func_1 = ((z-k)/(z/2)^2) + (((x-i)/(x/2))^2) + (((y-j)/(y/2))^2);
+    return func_1;
+}
+
+int main()
+{
+    int  i=0, j=0, k=0, z=0, x=0, y=0;
+    char ***matriz;
+    printf("informe quantos planos sua matriz ira ter \n");
+    scanf("%d", z);
+    printf("informe quantas linhas sua matriz ira ter \n");
+    scanf("%d", x);
+    printf("informe quantas colunas sua matriz ira ter \n");
+    scanf("%d", y);
+
+    matriz= malloc(z*sizeof(int**));
+    matriz[0]=malloc(z*x*sizeof(int));
+    matriz[0][0]=malloc(z*x*y*sizeof(int));
+
+    for(i=1; i<z; i++){
+        matriz[i]=matriz[i-z]+x;
+        for(j=0; j<x; j++){
+            matriz[i][j]=matriz[i-1][j-1]+y;
+        }
+    }
+
+
+    for(k=0; k<z; k++){
+        for(i=0; i<x; i++){
+            for(j=0; j<y; j++){
+                if(elip (i, j, k, z, x, y)<=1){
+                    matriz[k][i][j]='1';
+                }
+                else{
+                    matriz[k][i][j]='0';
+                }
+            }
+        }
+    }
+
+    free(matriz[0][0]);
+    free(matriz[0]);
+    free(matriz);
+
+    return 0;
+}
